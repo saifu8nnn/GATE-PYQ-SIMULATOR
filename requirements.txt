@@ -1,0 +1,7 @@
+# GATE CSE PYQ extraction pipeline — Python dependencies
+# Verified with Python 3.12.7 on Windows.
+PyMuPDF==1.24.11     # PDF parsing + rendering (import name: fitz)
+Pillow==10.4.0       # image stitching / validation / contact sheets
+
+# Test-only
+pytest==9.1.1

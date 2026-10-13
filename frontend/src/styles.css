@@ -1,0 +1,141 @@
+/* GATE CSE PYQ — offline exam UI. Desktop-first, no external fonts/assets. */
+
+:root {
+  --bg: #f4f5f8;
+  --panel: #ffffff;
+  --ink: #1c2333;
+  --muted: #5a647a;
+  --line: #d7dbe6;
+  --brand: #26365a;
+  --brand-ink: #ffffff;
+  --ok: #1c7a44;
+  --bad: #b02a2a;
+  --warn: #9a6400;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+button {
+  font: inherit;
+  padding: 0.45em 0.9em;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--panel);
+  cursor: pointer;
+}
+button:hover:not(:disabled) { border-color: var(--brand); }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+button.primary { background: var(--brand); color: var(--brand-ink); border-color: var(--brand); }
+button.danger { background: var(--bad); color: #fff; border-color: var(--bad); }
+button.danger-outline { color: var(--bad); border-color: var(--bad); background: transparent; }
+
+h1 { font-size: 1.5rem; }
+h2 { font-size: 1.15rem; }
+
+.page { max-width: 1280px; margin: 0 auto; padding: 1rem 1.5rem 3rem; }
+.page.boot { text-align: center; margin-top: 15vh; }
+.page.boot.error { color: var(--bad); }
+
+.hint { color: var(--muted); font-size: 0.9rem; }
+.error-text { color: var(--bad); }
+
+/* ── dashboard ─────────────────────────────────────────────────────────── */
+.dataset-badge { background: var(--panel); border: 1px solid var(--line); padding: 0.5rem 0.8rem; border-radius: 8px; }
+.pilot-warning { color: var(--warn); font-weight: 600; }
+
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.8rem; margin: 1.2rem 0; }
+.stat-card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 0.8rem; text-align: center; }
+.stat-card.ok .stat-value { color: var(--ok); }
+.stat-card.bad .stat-value { color: var(--bad); }
+.stat-card.warn .stat-value { color: var(--warn); }
+.stat-value { font-size: 1.6rem; font-weight: 700; }
+.stat-label { color: var(--muted); font-size: 0.82rem; margin-top: 0.2rem; }
+
+.mode-buttons { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0.6rem 0; }
+.mode-buttons button { font-size: 1rem; padding: 0.7em 1.2em; }
+
+.recent-table { width: 100%; border-collapse: collapse; background: var(--panel); }
+.recent-table th, .recent-table td { border: 1px solid var(--line); padding: 0.4rem 0.6rem; text-align: left; font-size: 0.9rem; }
+
+.data-actions { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+.confirm-box { background: var(--panel); border: 1px solid var(--bad); border-radius: 8px; padding: 0.8rem; width: 100%; }
+
+/* ── setup ─────────────────────────────────────────────────────────────── */
+.filters { display: flex; flex-wrap: wrap; gap: 0.9rem; margin: 1rem 0; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 0.9rem; }
+.filters label, .setup-options label, .mode-select, .year-range label { display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.85rem; color: var(--muted); }
+.filters select, .filters input, .setup-options select, .setup-options input, .mode-select select, .year-range input {
+  font: inherit; padding: 0.35em 0.5em; border: 1px solid var(--line); border-radius: 6px; background: #fff; color: var(--ink); min-width: 9rem;
+}
+.checkbox-row { flex-direction: row !important; align-items: center; gap: 0.4rem !important; }
+.setup-options { display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end; }
+.year-range { display: flex; gap: 1rem; margin: 0.5rem 0; }
+.setup-summary { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 1rem; margin-top: 1rem; }
+.setup-summary ul { line-height: 1.7; }
+
+/* ── exam ──────────────────────────────────────────────────────────────── */
+.exam-topbar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: var(--brand); color: var(--brand-ink); border-radius: 10px; padding: 0.6rem 1rem; position: sticky; top: 0; z-index: 5; }
+.exam-meta { display: flex; flex-direction: column; gap: 0.1rem; font-size: 0.85rem; }
+.exam-topbar-right { display: flex; gap: 0.6rem; align-items: center; }
+.exam-timer { font-variant-numeric: tabular-nums; font-weight: 700; font-size: 1.05rem; background: rgba(255,255,255,0.15); padding: 0.3em 0.6em; border-radius: 6px; }
+.exam-timer.warning { background: #d97706; }
+.exam-timer.critical { background: var(--bad); animation: blink 1s step-end infinite; }
+@keyframes blink { 50% { opacity: 0.55; } }
+.timer-warning { background: #fff3cd; border: 1px solid #e0c060; color: #6b4e00; padding: 0.5rem 0.8rem; border-radius: 8px; margin-top: 0.6rem; }
+
+.exam-body { display: grid; grid-template-columns: 1fr 320px; gap: 1rem; margin-top: 0.8rem; align-items: start; }
+.exam-main { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 1rem; }
+.exam-sidebar { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 0.9rem; position: sticky; top: 4.5rem; }
+
+.q-image-panel { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.q-image-toolbar { display: flex; gap: 0.4rem; align-items: center; padding: 0.4rem 0.6rem; background: var(--bg); border-bottom: 1px solid var(--line); }
+.q-image-toolbar button { padding: 0.2em 0.6em; }
+.zoom-level { font-size: 0.85rem; color: var(--muted); min-width: 3.2em; text-align: center; }
+.q-image-scroll { max-height: 70vh; overflow: auto; background: #fff; }
+.q-image-error { padding: 2rem; color: var(--bad); }
+
+.response-options { border: 1px solid var(--line); border-radius: 8px; margin-top: 1rem; padding: 0.6rem 0.9rem; }
+.response-options legend { font-weight: 600; padding: 0 0.4rem; }
+.option-row { display: flex; align-items: center; gap: 0.5rem; padding: 0.35rem 0; cursor: pointer; }
+.option-label { font-weight: 700; }
+.response-nat, .response-text { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.35rem; }
+.response-nat input, .response-text textarea { font: inherit; padding: 0.45em 0.6em; border: 1px solid var(--line); border-radius: 6px; max-width: 30rem; }
+.response-unknown { margin-top: 1rem; background: #fff8e6; border: 1px solid #e5d39a; border-radius: 8px; padding: 0.7rem 0.9rem; color: #6b4e00; }
+
+.exam-nav { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.2rem; border-top: 1px solid var(--line); padding-top: 0.9rem; }
+
+/* palette */
+.palette-grid { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.4rem; padding: 0; margin: 0.4rem 0; }
+.palette-btn { display: flex; flex-direction: column; align-items: center; gap: 0.05rem; padding: 0.35rem 0.1rem; border-radius: 8px; font-size: 0.85rem; width: 100%; }
+.palette-btn .pal-glyph { font-size: 0.9rem; line-height: 1; }
+.pal-nv { background: #eceff5; }
+.pal-vu { background: #fde8c8; }
+.pal-an { background: #d7f0dd; }
+.pal-mk { background: #e5dcf7; }
+.pal-am { background: #cfe3f7; }
+.pal-current { outline: 3px solid var(--brand); outline-offset: 1px; }
+.palette-legend { list-style: none; padding: 0; margin: 0.6rem 0 0; display: flex; flex-direction: column; gap: 0.15rem; font-size: 0.78rem; color: var(--muted); }
+.palette-counts { font-size: 0.82rem; color: var(--muted); }
+
+/* modal */
+.modal-backdrop { position: fixed; inset: 0; background: rgba(20, 26, 40, 0.5); display: flex; align-items: center; justify-content: center; z-index: 20; }
+.modal { background: var(--panel); border-radius: 12px; padding: 1.2rem 1.4rem; width: min(420px, 90vw); display: flex; flex-direction: column; gap: 0.7rem; }
+
+/* results */
+.review-nav { display: flex; gap: 0.6rem; align-items: center; margin: 0.6rem 0; }
+.review-nav select { font: inherit; padding: 0.3em 0.5em; border: 1px solid var(--line); border-radius: 6px; }
+.review-item { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 1rem; margin-top: 0.6rem; }
+.grade-correct { color: var(--ok); }
+.grade-incorrect { color: var(--bad); }
+.grade-ungradable { color: var(--warn); }
+
+@media (max-width: 980px) {
+  .exam-body { grid-template-columns: 1fr; }
+  .exam-sidebar { position: static; }
+}
